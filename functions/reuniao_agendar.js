@@ -1,24 +1,53 @@
-'use strict';
+'use strict'
+
+const { Sala, Reuniao, Sequelize, sequelize } = require('../layer/models')
 
 module.exports.handler = async event => {
-  let {inicio, fim, sala_id} = event;
-  console.log(inicio);
-  let reuniao = {
-    reuniao_id: 1,
-    user_id: '23456789-jhgfd-7890-kjhgfd',
-    sala_id: sala_id,
-    inicio: inicio,
-    fim: fim
-  };
-
-  const responseError = {
-    statusCode: 400,
-    erro: 'qlqer coisa!'
+  let nome = 'Sala 01'
+  try {
+    const sala = await Sala.create({ nome })
+  } catch (ex) {
+    throw new Error('Algo deu errado')
   }
-  // throw new Error(JSON.stringify(responseError))
+
+  let {inicio, fim, sala_id} = event
+
+  let inicioF = new Date(inicio);
+  let fimF = new Date(fim);
+
+  const ExisteSala = await Sala.findAll({
+    where: {id: sala_id}
+  });
+
+  const ConflitoSala = await Reuniao.findAll({
+    where: {
+      inicio: {
+        [Sequelize.Op.lt]: fimF
+        },
+      fim: {
+        [Sequelize.Op.gt]: inicioF
+        }
+     }
+  });
+
+  let reuniao = '';
+  if(ExisteSala !='' && ConflitoSala ==''){
+
+    const reuniaoSave = await Reuniao.create({inicio: inicioF, fim: fimF, SalaId: sala_id, UserId: 'a21a18bb-df19-46bb-b632-7b7f1529f6f9'});
+
+    reuniao = {
+      reuniao_id: reuniaoSave.dataValues.id,
+      sala_id: reuniaoSave.dataValues.SalaId,
+      user_id: reuniaoSave.dataValues.UserId,
+      inicio: reuniaoSave.dataValues.inicio,
+      fim: reuniaoSave.dataValues.fim
+    };
+  }else{
+    reuniao = "erro";
+  }
+
+  sequelize.close()
 
   return reuniao;
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
 }

@@ -7,7 +7,13 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'Sala',
   })
   Sala.associate = function(models) {
-    // associations can be defined here
+    Sala.hasMany(models.Reuniao, {
+      foreignKey: {
+        name: 'SalaId',
+        fieldName: 'SalaId',
+      },
+      as: 'Reuniao',
+    });
   }
   return Sala;
 }
