@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
 module.exports.handler = async event => {
-  let {inicio, fim, sala_id} = event;
-  console.log(inicio);
+  let {inicio, fim, sala_id} = event
+
   let reuniao = {
     reuniao_id: 1,
     user_id: '23456789-jhgfd-7890-kjhgfd',
     sala_id: sala_id,
     inicio: inicio,
     fim: fim
-  };
+  }
 
   const responseError = {
     statusCode: 400,
