@@ -60,6 +60,35 @@ provider:
 functions:
   hello:
     handler: functions/handler.hello
+  reuniao_agendar:
+    handler: functions/reuniao_agendar.handler
+    events:
+      - http:
+        path: reuniao/agendar
+        method: post
+        integration: lambda
+        request:
+          template:
+            application/json: >
+              #set($inputRoot = $input.path('$'))
+              {
+                "inicio": "$inputRoot.input.inicio",
+                "fim": "$inputRoot.input.fim",
+                "sala_id": $inputRoot.input.sala_id
+              }
+        response:
+          headers:
+            Access-Control-Allow-Origin: "'*'"
+            Content-Type: "'application/json'"
+          template: >
+            #set($inputRoot = $input.path('$'))
+            {
+              "reuniao_id": $inputRoot.input.reuniao_id,
+              "sala_id": $inputRoot.input.reuniao_id,
+              "user_id": $inputRoot.input.reuniao_id,
+              "inicio": $inputRoot.input.reuniao_id,
+              "fim": $inputRoot.input.reuniao_id
+            }
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
