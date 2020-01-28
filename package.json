@@ -15,5 +15,6 @@
   "devDependencies": {
     "serverless-offline": "^5.12.1"
   },
-  "description": ""
+  "description": "",
+  "dependencies": {}
 }
