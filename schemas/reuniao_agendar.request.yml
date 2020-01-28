@@ -1,0 +1,25 @@
+schema:
+  application/json: >
+    {
+      "type": "object",
+      "required": ["inicio", "fim", "sala_id"],
+      "properties": {
+        "inicio": {
+          "type": "datetime"
+        },
+        "fim": {
+          "type": "datetime"
+        },
+        "sala_id": {
+          "type": "integer"
+        }
+      }
+    }
+template:
+  application/json: >
+    #set($inputRoot = $input.path('$'))
+    {
+      "inicio": "$inputRoot.inicio",
+      "fim": "$inputRoot.fim",
+      "sala_id": $inputRoot.sala_id
+    }

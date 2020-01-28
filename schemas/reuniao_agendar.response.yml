@@ -1,0 +1,15 @@
+headers:
+  Access-Control-Allow-Origin: "'*'"
+  Content-Type: "'application/json'"
+statusCodes:
+  200:
+    pattern: ""
+    template: >
+      #set($inputRoot = $input.path('$'))
+      {
+        "reuniao_id": $inputRoot.reuniao_id,
+        "sala_id": $inputRoot.sala_id,
+        "user_id": "$inputRoot.user_id",
+        "inicio": "$inputRoot.inicio",
+        "fim": "$inputRoot.fim"
+      }

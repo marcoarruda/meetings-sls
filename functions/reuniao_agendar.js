@@ -11,6 +11,12 @@ module.exports.handler = async event => {
     fim: fim
   };
 
+  const responseError = {
+    statusCode: 400,
+    erro: 'qlqer coisa!'
+  }
+  // throw new Error(JSON.stringify(responseError))
+
   return reuniao;
 
   // Use this code if you don't use the http event with the LAMBDA-PROXY integration
