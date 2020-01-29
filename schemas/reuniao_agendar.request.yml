@@ -5,10 +5,10 @@ schema:
       "required": ["inicio", "fim", "sala_id"],
       "properties": {
         "inicio": {
-          "type": "datetime"
+          "type": "string"
         },
         "fim": {
-          "type": "datetime"
+          "type": "string"
         },
         "sala_id": {
           "type": "integer"

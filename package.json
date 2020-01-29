@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "./commands/pretest.sh",
+    "test": "mocha tests -t 10000 || :",
+    "posttest": "./commands/posttest.sh",
+    "pretest-with-coverage": "./commands/pretest.sh",
+    "test-with-coverage": "nyc --reporter=text --check-coverage --lines=95 mocha tests || :",
+    "posttest-with-coverage": "./commands/posttest.sh"
   },
   "repository": {
     "type": "git",
@@ -13,6 +18,11 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/marcoarrudateam/meetings-sls#readme",
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.0.1",
+    "nyc": "^15.0.0",
+    "sequelize": "^5.21.3",
+    "sequelize-cli": "^5.5.1",
     "serverless-offline": "^5.12.1"
   },
   "description": "",
