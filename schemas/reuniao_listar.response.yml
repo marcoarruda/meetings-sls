@@ -5,11 +5,11 @@ template: >
   #set($inputRoot = $input.path('$'))
   {
     "reunioes":[
-      #foreach($item in inputRoot)
+      #foreach($item in $inputRoot)
       {
         "id": $item.id,
-        "inicio": $item.inicio,
-        "fim": $item.fim,
+        "inicio": "$item.inicio",
+        "fim": "$item.fim",
         "SalaId": $item.SalaId,
         "UserId": "$item.UserId"
       }

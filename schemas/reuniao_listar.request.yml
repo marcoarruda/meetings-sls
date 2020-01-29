@@ -1,6 +1,30 @@
 parameters:
-paths:
-  ano: true
-  mes: true
+  paths:
+    ano: true
+    mes: true
 template:
-  application/json: '{"ano": "$inputRoot.params(''ano'')","mes": "$inputRoot.params(''mes'')"}'
+  application/json: >
+    #set($allParams = $input.params())
+      {
+        #set($params = $allParams.get('path'))
+        #foreach($paramName in $params.keySet())
+        "$paramName" : "$util.escapeJavaScript($params.get($paramName))"
+        #if($foreach.hasNext),#end
+        #end
+      }
+  # application/json: >
+  #   #set($allParams = $input.params())
+  #     {
+  #       "params" : {
+  #         #foreach($type in $allParams.keySet())
+  #         #set($params = $allParams.get($type))
+  #         "$type" : {
+  #           #foreach($paramName in $params.keySet())
+  #           "$paramName" : "$util.escapeJavaScript($params.get($paramName))"
+  #           #if($foreach.hasNext),#end
+  #           #end
+  #         }
+  #         #if($foreach.hasNext),#end
+  #         #end
+  #       }
+  #     }

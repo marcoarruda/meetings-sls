@@ -5,6 +5,8 @@ const { Reuniao, Sequelize, sequelize } = require('../layer/models')
 module.exports.handler = async event => {
   try {
 
+    console.log(event)
+
     let {ano, mes} = event
     console.log(ano);
     console.log(mes);
