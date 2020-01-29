@@ -3,37 +3,42 @@
 const { Sala, Reuniao, Sequelize, sequelize } = require('../layer/models')
 
 module.exports.handler = async event => {
-  let nome = 'Sala 01'
   try {
-    const sala = await Sala.create({ nome })
-  } catch (ex) {
-    throw new Error('Algo deu errado')
-  }
+    // let nome = 'Sala 01'
+    // try {
+    //   const sala = await Sala.create({ nome })
+    // } catch (ex) {
+    //   throw new Error('Algo deu errado')
+    // }
 
-  let {inicio, fim, sala_id} = event
+    let {inicio, fim, sala_id} = event
 
-  let inicioF = new Date(inicio);
-  let fimF = new Date(fim);
+    inicio = new Date(inicio);
+    fim = new Date(fim);
 
-  const ExisteSala = await Sala.findAll({
-    where: {id: sala_id}
-  });
+    const ExisteSala = await Sala.findByPk(sala_id);
 
-  const ConflitoSala = await Reuniao.findAll({
-    where: {
-      inicio: {
-        [Sequelize.Op.lt]: fimF
-        },
-      fim: {
-        [Sequelize.Op.gt]: inicioF
-        }
-     }
-  });
+    let reuniao = '';
+    if(ExisteSala == null){
+      throw new Error('Sala não existe');
+    }
 
-  let reuniao = '';
-  if(ExisteSala !='' && ConflitoSala ==''){
+    const ConflitoSala = await Reuniao.findAll({
+      where: {
+        inicio: {
+          [Sequelize.Op.lt]: fim
+          },
+        fim: {
+          [Sequelize.Op.gt]: inicio
+          }
+       }
+    });
 
-    const reuniaoSave = await Reuniao.create({inicio: inicioF, fim: fimF, SalaId: sala_id, UserId: 'a21a18bb-df19-46bb-b632-7b7f1529f6f9'});
+    if(ConflitoSala.length > 0){
+      throw new Error('Já existe uma reunião neste horario');
+    }
+
+    const reuniaoSave = await Reuniao.create({inicio, fim, SalaId: sala_id, UserId: 'a21a18bb-df19-46bb-b632-7b7f1529f6f9'});
 
     reuniao = {
       reuniao_id: reuniaoSave.dataValues.id,
@@ -42,12 +47,17 @@ module.exports.handler = async event => {
       inicio: reuniaoSave.dataValues.inicio,
       fim: reuniaoSave.dataValues.fim
     };
-  }else{
-    reuniao = "erro";
+
+    return reuniao;
+
+  } catch (e){
+
+    throw new Error(e.message);
+
+  } finally {
+
+    sequelize.close();
+
   }
-
-  sequelize.close()
-
-  return reuniao;
 
 }
