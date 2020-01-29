@@ -4,18 +4,18 @@ const { Sala, Reuniao, Sequelize, sequelize } = require('../layer/models')
 
 module.exports.handler = async event => {
   try {
-    // let nome = 'Sala 01'
-    // try {
-    //   const sala = await Sala.create({ nome })
-    // } catch (ex) {
-    //   throw new Error('Algo deu errado')
-    // }
 
-    let {inicio, fim, sala_id} = event
+    let {id, inicio, fim, sala_id} = event
     let reuniao = '';
 
     inicio = new Date(inicio);
     fim = new Date(fim);
+
+    const reuniaoSave = await Reuniao.findByPk(id);
+
+    if(reuniaoSave == null){
+      throw new Error('Reunião não existe');
+    }
 
     const ExisteSala = await Sala.findByPk(sala_id);
 
@@ -33,6 +33,9 @@ module.exports.handler = async event => {
           },
         fim: {
           [Sequelize.Op.gt]: inicio
+          },
+        id: {
+          [Sequelize.Op.ne]: id
           }
        }
     });
@@ -41,14 +44,18 @@ module.exports.handler = async event => {
       throw new Error('Já existe uma reunião neste horario');
     }
 
-    const reuniaoSave = await Reuniao.create({inicio, fim, SalaId: sala_id, UserId: 'a21a18bb-df19-46bb-b632-7b7f1529f6f9'});
+    reuniaoSave.inicio = inicio;
+    reuniaoSave.fim = fim;
+    reuniaoSave.SalaId = sala_id;
+
+    await reuniaoSave.save();
 
     reuniao = {
-      reuniao_id: reuniaoSave.dataValues.id,
-      sala_id: reuniaoSave.dataValues.SalaId,
-      user_id: reuniaoSave.dataValues.UserId,
-      inicio: reuniaoSave.dataValues.inicio,
-      fim: reuniaoSave.dataValues.fim
+      reuniao_id: reuniaoSave.id,
+      sala_id: reuniaoSave.SalaId,
+      user_id: reuniaoSave.UserId,
+      inicio: reuniaoSave.inicio,
+      fim: reuniaoSave.fim
     };
 
     return reuniao;

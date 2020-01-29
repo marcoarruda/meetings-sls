@@ -2,8 +2,11 @@ schema:
   application/json: >
     {
       "type": "object",
-      "required": ["inicio", "fim", "sala_id"],
+      "required": ["id","inicio", "fim", "sala_id"],
       "properties": {
+        "id": {
+          "type": "integer"
+        },
         "inicio": {
           "type": "string"
         },
@@ -19,6 +22,7 @@ template:
   application/json: >
     #set($inputRoot = $input.path('$'))
     {
+      "id": $inputRoot.id,
       "inicio": "$inputRoot.inicio",
       "fim": "$inputRoot.fim",
       "sala_id": $inputRoot.sala_id

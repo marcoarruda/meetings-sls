@@ -19,3 +19,12 @@ functions:
           integration: lambda
           request: ${file(./schemas/reuniao_agendar.request.yml)}
           response: ${file(./schemas/reuniao_agendar.response.yml)}
+  reuniao_alterar:
+    handler: functions/reuniao_alterar.handler
+    events:
+      - http:
+          path: reuniao/alterar
+          method: put
+          integration: lambda
+          request: ${file(./schemas/reuniao_alterar.request.yml)}
+          response: ${file(./schemas/reuniao_alterar.response.yml)}
