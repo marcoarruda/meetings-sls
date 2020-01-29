@@ -28,3 +28,13 @@ functions:
           integration: lambda
           request: ${file(./schemas/reuniao_alterar.request.yml)}
           response: ${file(./schemas/reuniao_alterar.response.yml)}
+  reuniao_listar:
+    handler: functions/reuniao_listar.handler
+    events:
+      - http:
+          path: reuniao/listar/{ano}/{mes}
+          method: get
+          integration: lambda
+          cors: true
+          request: ${file(./schemas/reuniao_listar.request.yml)}
+          response: ${file(./schemas/reuniao_listar.response.yml)}

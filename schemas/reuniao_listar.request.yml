@@ -1,0 +1,6 @@
+parameters:
+paths:
+  ano: true
+  mes: true
+template:
+  application/json: '{"ano": "$inputRoot.params(''ano'')","mes": "$inputRoot.params(''mes'')"}'
