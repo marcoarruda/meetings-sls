@@ -1,4 +1,4 @@
-service: serveless
+service: meetings
 
 plugins:
   - serverless-offline

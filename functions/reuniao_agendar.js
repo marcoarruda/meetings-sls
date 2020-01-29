@@ -55,7 +55,10 @@ module.exports.handler = async event => {
 
   } catch (e){
 
-    throw new Error(e.message);
+    throw new Error(JSON.stringify({
+        statusCode: 400,
+        message: e.message
+    }));
 
   } finally {
 
