@@ -10,7 +10,7 @@ module.exports.handler = async event => {
     let {ano, mes} = event
     console.log(ano);
     console.log(mes);
-    let lastday = new Date(ano, mes +1, 0).getDate();
+    let lastday = new Date(ano, mes, 0).getDate();
     let inicio = new Date(ano+"-"+mes+"-01");
     let fim = new Date(ano+"-"+mes+"-"+lastday);
 
