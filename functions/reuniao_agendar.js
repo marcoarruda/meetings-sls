@@ -1,27 +1,63 @@
 'use strict'
 
+const { Sala, Reuniao, Sequelize, sequelize } = require('../layer/models')
+
 module.exports.handler = async event => {
   try {
-    let { inicio, fim, sala_id } = event
+    // let nome = 'Sala 01'
+    // try {
+    //   const sala = await Sala.create({ nome })
+    // } catch (ex) {
+    //   throw new Error('Algo deu errado')
+    // }
 
-    let reuniao = {
-      reuniao_id: 1,
-      sala_id: sala_id,
-      user_id: '23456789-jhgfd-7890-kjhgfd',
-      inicio: inicio,
-      fim: fim
+    let {inicio, fim, sala_id} = event
+
+    inicio = new Date(inicio);
+    fim = new Date(fim);
+
+    const ExisteSala = await Sala.findByPk(sala_id);
+
+    let reuniao = '';
+    if(ExisteSala == null){
+      throw new Error('Sala não existe');
     }
 
-    if (sala_id == 1) {
-      throw new Error('invalid argument for sala_id')
-    } else {
-      return reuniao
+    const ConflitoSala = await Reuniao.findAll({
+      where: {
+        inicio: {
+          [Sequelize.Op.lt]: fim
+          },
+        fim: {
+          [Sequelize.Op.gt]: inicio
+          }
+       }
+    });
+
+    if(ConflitoSala.length > 0){
+      throw new Error('Já existe uma reunião neste horario');
     }
-  } catch(ex) {
-    const response = {
-      statusCode: 400,
-      erro: ex.message,
-    }
-    throw new Error(JSON.stringify(response))
+
+    const reuniaoSave = await Reuniao.create({inicio, fim, SalaId: sala_id, UserId: 'a21a18bb-df19-46bb-b632-7b7f1529f6f9'});
+
+    reuniao = {
+      reuniao_id: reuniaoSave.dataValues.id,
+      sala_id: reuniaoSave.dataValues.SalaId,
+      user_id: reuniaoSave.dataValues.UserId,
+      inicio: reuniaoSave.dataValues.inicio,
+      fim: reuniaoSave.dataValues.fim
+    };
+
+    return reuniao;
+
+  } catch (e){
+
+    throw new Error(e.message);
+
+  } finally {
+
+    sequelize.close();
+
   }
+
 }
