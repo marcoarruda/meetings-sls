@@ -3,9 +3,35 @@ service: meetings
 plugins:
   - serverless-offline
 
+custom:
+  dev:
+    hostname: db-serverless.cluster-chai0zoj30bj.us-east-1.rds.amazonaws.com
+    database: meetings
+    username: admin
+    password: db.12345
+  vpc:
+    dev:
+      securityGroupIds:
+        - sg-72aa970a
+      subnetIds:
+        - subnet-1714991b
+        - subnet-3872e260
+        - subnet-5120696c
+        - subnet-beaecddb
+
 provider:
   name: aws
   runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  memorySize: 128
+  timeout: 10
+  environment:
+    HOSTNAME: ${self:custom.${self:provider.stage}.hostname}
+    DATABASE: ${self:custom.${self:provider.stage}.database}
+    USERNAME: ${self:custom.${self:provider.stage}.username}
+    PASSWORD: ${self:custom.${self:provider.stage}.password}
+    LAYER: /opt
+  vpc: ${self:custom.vpc.${self:provider.stage}}
 
 functions:
   hello:
