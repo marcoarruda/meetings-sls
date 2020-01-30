@@ -42,8 +42,6 @@ module.exports.handler = async event => {
 
   } finally {
 
-    sequelize.close();
-
   }
 
 }

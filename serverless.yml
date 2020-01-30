@@ -34,8 +34,6 @@ provider:
   vpc: ${self:custom.vpc.${self:provider.stage}}
 
 functions:
-  hello:
-    handler: functions/handler.hello
   reuniao_agendar:
     handler: functions/reuniao_agendar.handler
     events:
