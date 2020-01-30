@@ -28,6 +28,15 @@ functions:
           integration: lambda
           request: ${file(./schemas/reuniao_alterar.request.yml)}
           response: ${file(./schemas/reuniao_alterar.response.yml)}
+  reuniao_relatorio:
+    handler: functions/reuniao_relatorio.handler
+    events:
+      - http:
+          path: reuniao/relatorio/{user}/{ano}/{mes}
+          method: get
+          integration: lambda
+          request: ${file(./schemas/reuniao_relatorio.request.yml)}
+          response: ${file(./schemas/reuniao_relatorio.response.yml)}
   reuniao_listar:
     handler: functions/reuniao_listar.handler
     events:

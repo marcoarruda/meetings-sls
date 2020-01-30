@@ -1,0 +1,31 @@
+headers:
+  Access-Control-Allow-Origin: "'*'"
+  Content-Type: "'application/json'"
+template: >
+  #set($inputRoot = $input.path('$'))
+  {
+    "reunioes":[
+      #foreach($item in $inputRoot)
+      {
+        "id": $item.id,
+        "inicio": "$item.inicio",
+        "fim": "$item.fim",
+        "SalaId": $item.SalaId,
+        "UserId": "$item.UserId"
+      }
+      #if($foreach.hasNext),#end
+      #end
+    ]
+  }
+statusCodes:
+  200:
+    pattern: ""
+  400:
+    pattern: '.*"statusCode":400.*'
+    template: >
+      #set($inputRoot = $input.path('$'))
+      {
+        "message": $inputRoot.errorMessage
+      }
+    headers:
+      Content-Type: "'application/json'"
