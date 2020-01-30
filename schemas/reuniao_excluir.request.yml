@@ -1,0 +1,17 @@
+schema:
+  application/json: >
+    {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    }
+template:
+  application/json: >
+    #set($inputRoot = $input.path('$'))
+    {
+      "id": $inputRoot.id
+    }

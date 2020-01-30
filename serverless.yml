@@ -38,3 +38,12 @@ functions:
           cors: true
           request: ${file(./schemas/reuniao_listar.request.yml)}
           response: ${file(./schemas/reuniao_listar.response.yml)}
+  reuniao_excluir:
+    handler: functions/reuniao_excluir.handler
+    events:
+      - http:
+          path: reuniao/excluir
+          method: delete
+          integration: lambda
+          request: ${file(./schemas/reuniao_excluir.request.yml)}
+          response: ${file(./schemas/reuniao_excluir.response.yml)}

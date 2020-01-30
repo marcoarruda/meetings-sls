@@ -1,0 +1,24 @@
+headers:
+  Access-Control-Allow-Origin: "'*'"
+  Content-Type: "'application/json'"
+template: >
+  #set($inputRoot = $input.path('$'))
+  {
+    "reuniao_id": $inputRoot.reuniao_id,
+    "sala_id": $inputRoot.sala_id,
+    "user_id": "$inputRoot.user_id",
+    "inicio": "$inputRoot.inicio",
+    "fim": "$inputRoot.fim"
+  }
+statusCodes:
+  200:
+    pattern: ""
+  400:
+    pattern: '.*"statusCode":400.*'
+    template: >
+      #set($inputRoot = $input.path('$'))
+      {
+        "message": $inputRoot.errorMessage
+      }
+    headers:
+      Content-Type: "'application/json'"
