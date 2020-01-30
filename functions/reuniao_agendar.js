@@ -1,6 +1,7 @@
 'use strict'
 
 const { Sala, Reuniao, Sequelize, sequelize } = require('../layer/models')
+const Response = require('../layer/response')
 
 module.exports.handler = async event => {
   try {
@@ -51,9 +52,11 @@ module.exports.handler = async event => {
       fim: reuniaoSave.dataValues.fim
     };
 
-    return reuniao;
+    return Response(200, reuniao);
 
   } catch (e){
+
+    return Response(400, e.message)
 
     throw new Error(JSON.stringify({
         statusCode: 400,
