@@ -1,14 +1,21 @@
-parameters:
-  paths:
-    ano: true
-    mes: true
+# parameters:
+#   paths:
+#     ano: true
+#     mes: true
 template:
-  application/json: >
-    #set($params = $input.params().get('path'))
-      {
-        "mes": "$util.escapeJavaScript($params.get('mes'))",
-        "ano": "$util.escapeJavaScript($params.get('ano'))"
-      }
+  application/json:
+    '{
+      "ano" : "$input.params(''ano'')",
+      "mes" : "$input.params(''mes'')"
+    }'
+#====== versão alternativa para request =====#
+  # application/json: >
+  #   #set($params = $input.params().get('path'))
+  #     {
+  #       "mes": "$util.escapeJavaScript($params.get('mes'))",
+  #       "ano": "$util.escapeJavaScript($params.get('ano'))"
+  #     }
+#==== referencia de request alternativo =====#
   # application/json: >
   #   #set($allParams = $input.params())
   #     {
