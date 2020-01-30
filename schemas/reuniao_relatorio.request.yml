@@ -1,0 +1,13 @@
+parameters:
+  paths:
+    user: true
+    ano: true
+    mes: true
+template:
+  application/json: >
+    #set($params = $input.params().get('path'))
+      {
+        "user": "$util.escapeJavaScript($params.get('user'))",
+        "mes": "$util.escapeJavaScript($params.get('mes'))",
+        "ano": "$util.escapeJavaScript($params.get('ano'))"
+      }
