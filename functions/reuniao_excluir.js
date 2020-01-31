@@ -1,17 +1,17 @@
 'use strict'
 
-const { Reuniao, sequelize } = require('../layer/models')
+const { Reuniao } = require('../layer/models')
 
 module.exports.handler = async event => {
   try {
 
     let {id} = event
-    let reuniao = '';
+    let reuniao = ''
 
-    const reuniaoSave = await Reuniao.findByPk(id);
+    const reuniaoSave = await Reuniao.findByPk(id)
 
     if(reuniaoSave == null){
-      throw new Error('Reunião não existe');
+      throw new Error('Reunião não existe')
     }
 
     reuniao = {
@@ -20,21 +20,21 @@ module.exports.handler = async event => {
       user_id: reuniaoSave.UserId,
       inicio: reuniaoSave.inicio,
       fim: reuniaoSave.fim
-    };
+    }
 
-    await reuniaoSave.destroy();
+    await reuniaoSave.destroy()
 
-    return reuniao;
+    return reuniao
 
   } catch (e){
 
     throw new Error(JSON.stringify({
-        statusCode: 400,
-        message: e.message
-    }));
+      statusCode: 400,
+      message: e.message
+    }))
 
   } finally {
-
+    // empty
   }
 
 }
