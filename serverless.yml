@@ -36,6 +36,10 @@ provider:
 functions:
   reuniao_agendar:
     handler: functions/reuniao_agendar.handler
+    package:
+      exclude: ${file(./serverless/fn-exclude.yml)}
+      include:
+        - functions/reuniao_agendar.js
     layers:
       - { Ref: ModelsLayerLambdaLayer }
     events:
@@ -47,6 +51,10 @@ functions:
           response: ${file(./serverless/schemas/reuniao_agendar.response.yml)}
   reuniao_alterar:
     handler: functions/reuniao_alterar.handler
+    package:
+      exclude: ${file(./serverless/fn-exclude.yml)}
+      include:
+        - functions/reuniao_alterar.js
     layers:
       - { Ref: ModelsLayerLambdaLayer }
     events:
@@ -58,6 +66,10 @@ functions:
           response: ${file(./serverless/schemas/reuniao_alterar.response.yml)}
   reuniao_relatorio:
     handler: functions/reuniao_relatorio.handler
+    package:
+      exclude: ${file(./serverless/fn-exclude.yml)}
+      include:
+        - functions/reuniao_relatorio.js
     layers:
       - { Ref: ModelsLayerLambdaLayer }
     events:
@@ -69,6 +81,10 @@ functions:
           response: ${file(./serverless/schemas/reuniao_relatorio.response.yml)}
   reuniao_listar:
     handler: functions/reuniao_listar.handler
+    package:
+      exclude: ${file(./serverless/fn-exclude.yml)}
+      include:
+        - functions/reuniao_listar.js
     layers:
       - { Ref: ModelsLayerLambdaLayer }
     events:
@@ -81,6 +97,10 @@ functions:
           response: ${file(./serverless/schemas/reuniao_listar.response.yml)}
   reuniao_excluir:
     handler: functions/reuniao_excluir.handler
+    package:
+      exclude: ${file(./serverless/fn-exclude.yml)}
+      include:
+        - functions/reuniao_excluir.js
     layers:
       - { Ref: ModelsLayerLambdaLayer }
     events:
@@ -97,18 +117,3 @@ layers:
     name: ${self:provider.stage}-cfz-layer
     compatibleRuntimes:
       - nodejs12.x
-
-# package:
-#   individually: true
-#   exclude:
-#     - .nyc_output
-#     - .vscode
-#     - commands
-#     - functions
-#     - layer
-#     - node_modules
-#     - schemas
-#     - tests
-#     - .eslintrc.json
-#     - package.json
-#     - package-lock.json
