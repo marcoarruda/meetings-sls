@@ -36,6 +36,8 @@ provider:
 functions:
   reuniao_agendar:
     handler: functions/reuniao_agendar.handler
+    layers:
+      - { Ref: ModelsLayerLambdaLayer }
     events:
       - http:
           path: reuniao/agendar
@@ -45,6 +47,8 @@ functions:
           response: ${file(./schemas/reuniao_agendar.response.yml)}
   reuniao_alterar:
     handler: functions/reuniao_alterar.handler
+    layers:
+      - { Ref: ModelsLayerLambdaLayer }
     events:
       - http:
           path: reuniao/alterar
@@ -54,6 +58,8 @@ functions:
           response: ${file(./schemas/reuniao_alterar.response.yml)}
   reuniao_relatorio:
     handler: functions/reuniao_relatorio.handler
+    layers:
+      - { Ref: ModelsLayerLambdaLayer }
     events:
       - http:
           path: reuniao/relatorio/{user}/{ano}/{mes}
@@ -63,6 +69,8 @@ functions:
           response: ${file(./schemas/reuniao_relatorio.response.yml)}
   reuniao_listar:
     handler: functions/reuniao_listar.handler
+    layers:
+      - { Ref: ModelsLayerLambdaLayer }
     events:
       - http:
           path: reuniao/listar/{ano}/{mes}
@@ -73,6 +81,8 @@ functions:
           response: ${file(./schemas/reuniao_listar.response.yml)}
   reuniao_excluir:
     handler: functions/reuniao_excluir.handler
+    layers:
+      - { Ref: ModelsLayerLambdaLayer }
     events:
       - http:
           path: reuniao/excluir
@@ -80,3 +90,13 @@ functions:
           integration: lambda
           request: ${file(./schemas/reuniao_excluir.request.yml)}
           response: ${file(./schemas/reuniao_excluir.response.yml)}
+
+layers:
+  modelsLayer:
+    path: ./layer/
+    name: ${self:provider.stage}-cfz-layer
+    compatibleRuntimes:
+      - nodejs12.x
+
+# package:
+#   individually: true
