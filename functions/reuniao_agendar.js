@@ -1,6 +1,6 @@
 'use strict'
 
-const { Sala, Reuniao, Sequelize, sequelize } = require('../layer/models')
+const { Sala, Reuniao, Sequelize } = require('../layer/models')
 
 module.exports.handler = async event => {
   try {
