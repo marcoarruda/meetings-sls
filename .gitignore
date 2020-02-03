@@ -2,6 +2,8 @@
 node_modules
 jspm_packages
 
+commands/env.sh
+
 # Serverless directories
 .serverless
 .nyc_output/**/*

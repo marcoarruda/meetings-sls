@@ -5,10 +5,10 @@ plugins:
 
 custom:
   dev:
-    hostname: db-serverless.cluster-chai0zoj30bj.us-east-1.rds.amazonaws.com
-    database: meetings
-    username: admin
-    password: db.12345
+    hostname: ${env:HOSTNAME}
+    database: ${env:DATABASE}
+    username: ${env:USERNAME}
+    password: ${env:PASSWORD}
   vpc:
     dev:
       securityGroupIds:
@@ -34,6 +34,14 @@ provider:
   vpc: ${self:custom.vpc.${self:provider.stage}}
 
 functions:
+  migrate:
+    handler: functions/migrate.handler
+    package:
+      exclude: ${file(./serverless/fn-exclude.yml)}
+      include:
+        - functions/migrate.js
+    layers:
+      - { Ref: ModelsLayerLambdaLayer }
   reuniao_agendar:
     handler: functions/reuniao_agendar.handler
     package:
