@@ -1,6 +1,6 @@
 'use strict'
 
-const layerpath = process.env.LAYERPTH || '../layer/'
+const layerpath = process.env.LAYERPTH || '../layer/nodejs/'
 
 const { Sala, Reuniao, Sequelize } = require(layerpath + 'models')
 

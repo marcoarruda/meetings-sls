@@ -1,8 +1,9 @@
 'use strict'
 
-const layerpath = process.env.LAYERPTH || '../layer/'
+const layerpath = process.env.LAYERPTH || '../layer/nodejs/'
 
-const Response = require(layerpath + 'response')
+// const Response = require(layerpath + 'response')
+console.log(layerpath)
 const { Sala, Reuniao, Sequelize } = require(layerpath + 'models')
 
 module.exports.handler = async event => {

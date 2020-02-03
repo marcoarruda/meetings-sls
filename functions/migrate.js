@@ -1,10 +1,12 @@
+const layerpath = process.env.LAYERPTH || '../layer/nodejs/'
+
 const Umzug = require('umzug')
 const models = require(layerpath + 'models')
 const sequelize = models.sequelize
 const Sequelize = models.Sequelize
 
-let migrationsPath = 'layer/migrations'
-let seedersPath = 'layer/seeders'
+let migrationsPath = layerpath + 'migrations'
+let seedersPath = layerpath + 'seeders'
 
 module.exports.handler = async function (event) {
   const { undo } = event
