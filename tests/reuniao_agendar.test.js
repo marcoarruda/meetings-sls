@@ -1,7 +1,7 @@
 const chai = require('chai')
 const expect = chai.expect
 
-const { Sala } = require('../layer/models/index')
+const { Sala } = require(layerpath + 'models/index')
 
 const reuniao_agendar = require('../functions/reuniao_agendar').handler
 

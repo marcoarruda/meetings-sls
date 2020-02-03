@@ -1,15 +1,14 @@
 'use strict'
 
-const { Reuniao, Sequelize } = require('../layer/models')
+const layerpath = process.env.LAYERPTH || '../layer/nodejs/'
+
+const Response = require(layerpath + 'response')
+const { Reuniao, Sequelize } = require(layerpath + 'models')
 
 module.exports.handler = async event => {
   try {
 
-    console.log(event)
-
     let {ano, mes} = event
-    console.log(ano)
-    console.log(mes)
     let lastday = new Date(ano, mes, 0).getDate()
     let inicio = new Date(ano+'-'+mes+'-01')
     let fim = new Date(ano+'-'+mes+'-'+lastday)
@@ -28,20 +27,11 @@ module.exports.handler = async event => {
       }
     })
 
-    if(reunioes.length < 1){
-      throw new Error('Não há reunioes no periodo selecionado')
-    }
-
-    //console.log(reunioes);
-
     return reunioes
 
-  } catch (e){
+  } catch (e) {
 
-    throw new Error(JSON.stringify({
-      statusCode: 400,
-      message: e.message
-    }))
+    throw new Error(Response(400, e.message))
 
   } finally {
     // empty
