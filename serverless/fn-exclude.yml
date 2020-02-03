@@ -1,0 +1,12 @@
+- .nyc_output/**
+- .vscode/**
+- commands/**
+- functions/**
+- layer/**
+- node_modules/**
+- schemas/**
+- serverless/**
+- tests/**
+- .eslintrc.json
+- package.json
+- package-lock.json
