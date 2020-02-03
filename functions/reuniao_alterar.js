@@ -2,6 +2,7 @@
 
 const layerpath = process.env.LAYERPTH || '../layer/nodejs/'
 
+const Response = require(layerpath + 'response')
 const { Sala, Reuniao, Sequelize } = require(layerpath + 'models')
 
 module.exports.handler = async event => {
@@ -62,12 +63,9 @@ module.exports.handler = async event => {
 
     return reuniao
 
-  } catch (e){
+  } catch (e) {
 
-    throw new Error(JSON.stringify({
-      statusCode: 400,
-      message: e.message
-    }))
+    throw new Error(Response(400, e.message))
 
   } finally {
     // empty

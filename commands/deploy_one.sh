@@ -6,4 +6,4 @@ export USERNAME=admin
 export PASSWORD=db.12345
 export LAYERPTH='/opt/nodejs/'
 
-sls deploy --aws-profile $1 --stage $2
+sls deploy --aws-profile $1 --stage $2 --function $3

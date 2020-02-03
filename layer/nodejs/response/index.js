@@ -1,8 +1,8 @@
 'use strict'
 
-module.exports = function Response(statusCode, body) {
-  return {
+module.exports = function Response(statusCode, message) {
+  return JSON.stringify({
     statusCode: statusCode,
-    body: JSON.stringify(body, null, 2)
-  }
+    message: message
+  })
 }
