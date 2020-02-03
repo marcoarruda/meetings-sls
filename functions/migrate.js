@@ -1,5 +1,5 @@
 const Umzug = require('umzug')
-const models = require('../layer/models')
+const models = require(layerpath + 'models')
 const sequelize = models.sequelize
 const Sequelize = models.Sequelize
 

@@ -9,6 +9,7 @@ custom:
     database: ${env:DATABASE}
     username: ${env:USERNAME}
     password: ${env:PASSWORD}
+    layerpth: ${env:LAYERPTH}
   vpc:
     dev:
       securityGroupIds:
@@ -30,7 +31,7 @@ provider:
     DATABASE: ${self:custom.${self:provider.stage}.database}
     USERNAME: ${self:custom.${self:provider.stage}.username}
     PASSWORD: ${self:custom.${self:provider.stage}.password}
-    LAYER: /opt
+    LAYERPTH: ${self:custom.${self:provider.stage}.layerpth}
   vpc: ${self:custom.vpc.${self:provider.stage}}
 
 functions:
@@ -122,7 +123,7 @@ functions:
 layers:
   modelsLayer:
     path: ./layer/
-    name: ${self:provider.stage}-cfz-layer
+    name: ${self:provider.stage}-meetings-layer
     compatibleRuntimes:
       - nodejs12.x
 

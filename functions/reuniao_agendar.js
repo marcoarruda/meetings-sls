@@ -1,16 +1,12 @@
 'use strict'
 
-const Response = require('../layer/response')
-const { Sala, Reuniao, Sequelize } = require('../layer/models')
+const layerpath = process.env.LAYERPTH || '../layer/'
+
+const Response = require(layerpath + 'response')
+const { Sala, Reuniao, Sequelize } = require(layerpath + 'models')
 
 module.exports.handler = async event => {
   try {
-    // let nome = 'Sala 01'
-    // try {
-    //   const sala = await Sala.create({ nome })
-    // } catch (ex) {
-    //   throw new Error('Algo deu errado')
-    // }
 
     let {inicio, fim, sala_id} = event
     let reuniao = ''
@@ -52,11 +48,19 @@ module.exports.handler = async event => {
       fim: reuniaoSave.dataValues.fim
     }
 
-    return Response(200, reuniao)
+    // return Response(200, reuniao)
+    return reuniao
 
   } catch (e){
 
-    return Response(400, e.message)
+    console.error(e)
+
+    return {
+      statusCode: 400,
+      body: JSON.stringify(e.message, null, 2)
+    }
+
+    // return Response(400, e.message)
 
   } finally {
     // empty

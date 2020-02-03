@@ -1,6 +1,8 @@
 'use strict'
 
-const { Reuniao } = require('../layer/models')
+const layerpath = process.env.LAYERPTH || '../layer/'
+
+const { Reuniao } = require(layerpath + 'models')
 
 module.exports.handler = async event => {
   try {
