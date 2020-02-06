@@ -1,0 +1,28 @@
+headers:
+  Access-Control-Allow-Origin: "'*'"
+  Content-Type: "'application/json'"
+template: >
+  #set($inputRoot = $input.path('$'))
+  {
+    "salas":[
+      #foreach($item in $inputRoot)
+      {
+        "id": $item.id,
+        "nome": "$item.nome"
+      }
+      #if($foreach.hasNext),#end
+      #end
+    ]
+  }
+statusCodes:
+  200:
+    pattern: ""
+  400:
+    pattern: '.*"statusCode":400.*'
+    template: >
+      #set($inputRoot = $input.path('$'))
+      {
+        "message": $inputRoot.errorMessage
+      }
+    headers:
+      Content-Type: "'application/json'"

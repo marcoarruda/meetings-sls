@@ -56,8 +56,10 @@ functions:
           path: reuniao/agendar
           method: post
           integration: lambda
+          cors: true
           request: ${file(./serverless/schemas/reuniao_agendar.request.yml)}
           response: ${file(./serverless/schemas/reuniao_agendar.response.yml)}
+          authorizer: ${file(./serverless/fn-event-authorizer.yml)}
   reuniao_alterar:
     handler: functions/reuniao_alterar.handler
     package:
@@ -71,8 +73,10 @@ functions:
           path: reuniao/alterar
           method: put
           integration: lambda
+          cors: true
           request: ${file(./serverless/schemas/reuniao_alterar.request.yml)}
           response: ${file(./serverless/schemas/reuniao_alterar.response.yml)}
+          authorizer: ${file(./serverless/fn-event-authorizer.yml)}
   reuniao_relatorio:
     handler: functions/reuniao_relatorio.handler
     package:
@@ -86,8 +90,10 @@ functions:
           path: reuniao/relatorio/{user}/{ano}/{mes}
           method: get
           integration: lambda
+          cors: true
           request: ${file(./serverless/schemas/reuniao_relatorio.request.yml)}
           response: ${file(./serverless/schemas/reuniao_relatorio.response.yml)}
+          authorizer: ${file(./serverless/fn-event-authorizer.yml)}
   reuniao_listar:
     handler: functions/reuniao_listar.handler
     package:
@@ -104,6 +110,24 @@ functions:
           cors: true
           request: ${file(./serverless/schemas/reuniao_listar.request.yml)}
           response: ${file(./serverless/schemas/reuniao_listar.response.yml)}
+          authorizer: ${file(./serverless/fn-event-authorizer.yml)}
+  sala_listar:
+    handler: functions/sala_listar.handler
+    package:
+      exclude: ${file(./serverless/fn-exclude.yml)}
+      include:
+        - functions/sala_listar.js
+    layers:
+      - { Ref: ModelsLayerLambdaLayer }
+    events:
+      - http:
+          path: sala/listar
+          method: get
+          integration: lambda
+          cors: true
+          request: ${file(./serverless/schemas/sala_listar.request.yml)}
+          response: ${file(./serverless/schemas/sala_listar.response.yml)}
+          authorizer: ${file(./serverless/fn-event-authorizer.yml)}
   reuniao_excluir:
     handler: functions/reuniao_excluir.handler
     package:
@@ -117,8 +141,10 @@ functions:
           path: reuniao/excluir
           method: delete
           integration: lambda
+          cors: true
           request: ${file(./serverless/schemas/reuniao_excluir.request.yml)}
           response: ${file(./serverless/schemas/reuniao_excluir.response.yml)}
+          authorizer: ${file(./serverless/fn-event-authorizer.yml)}
 
 layers:
   modelsLayer:
