@@ -111,6 +111,23 @@ functions:
           request: ${file(./serverless/schemas/reuniao_listar.request.yml)}
           response: ${file(./serverless/schemas/reuniao_listar.response.yml)}
           authorizer: ${file(./serverless/fn-event-authorizer.yml)}
+  sala_listar:
+    handler: functions/sala_listar.handler
+    package:
+      exclude: ${file(./serverless/fn-exclude.yml)}
+      include:
+        - functions/sala_listar.js
+    layers:
+      - { Ref: ModelsLayerLambdaLayer }
+    events:
+      - http:
+          path: sala/listar
+          method: get
+          integration: lambda
+          cors: true
+          request: ${file(./serverless/schemas/sala_listar.request.yml)}
+          response: ${file(./serverless/schemas/sala_listar.response.yml)}
+          authorizer: ${file(./serverless/fn-event-authorizer.yml)}
   reuniao_excluir:
     handler: functions/reuniao_excluir.handler
     package:
