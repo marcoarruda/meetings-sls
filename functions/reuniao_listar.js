@@ -16,9 +16,6 @@ module.exports.handler = async event => {
 
     const reunioes = await Reuniao.findAll({
       where: {
-        UserId: {
-          [Sequelize.Op.eq]: user_id
-        },
         inicio: {
           [Sequelize.Op.lte]: fim
         },
