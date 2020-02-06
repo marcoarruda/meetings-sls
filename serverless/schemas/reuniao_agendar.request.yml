@@ -19,6 +19,7 @@ template:
   application/json: >
     #set($inputRoot = $input.path('$'))
     {
+      "user_id": "$context.authorizer.claims.sub",
       "inicio": "$inputRoot.inicio",
       "fim": "$inputRoot.fim",
       "sala_id": $inputRoot.sala_id

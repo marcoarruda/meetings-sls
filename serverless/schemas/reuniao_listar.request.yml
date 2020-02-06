@@ -1,34 +1,7 @@
-# parameters:
-#   paths:
-#     ano: true
-#     mes: true
 template:
   application/json:
     '{
-      "ano" : "$input.params(''ano'')",
-      "mes" : "$input.params(''mes'')"
+      "user_id": "$context.authorizer.claims.sub",
+      "ano": "$input.params(''ano'')",
+      "mes": "$input.params(''mes'')"
     }'
-#====== versão alternativa para request =====#
-  # application/json: >
-  #   #set($params = $input.params().get('path'))
-  #     {
-  #       "mes": "$util.escapeJavaScript($params.get('mes'))",
-  #       "ano": "$util.escapeJavaScript($params.get('ano'))"
-  #     }
-#==== referencia de request alternativo =====#
-  # application/json: >
-  #   #set($allParams = $input.params())
-  #     {
-  #       "params" : {
-  #         #foreach($type in $allParams.keySet())
-  #         #set($params = $allParams.get($type))
-  #         "$type" : {
-  #           #foreach($paramName in $params.keySet())
-  #           "$paramName" : "$util.escapeJavaScript($params.get($paramName))"
-  #           #if($foreach.hasNext),#end
-  #           #end
-  #         }
-  #         #if($foreach.hasNext),#end
-  #         #end
-  #       }
-  #     }
