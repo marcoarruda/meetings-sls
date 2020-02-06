@@ -8,11 +8,11 @@ const { Reuniao, Sequelize } = require(layerpath + 'models')
 module.exports.handler = async event => {
   try {
 
-    let {user, ano, mes} = event
+    let { user_id, user, ano, mes } = event
 
     let lastday = new Date(ano, mes, 0).getDate()
-    let inicio = new Date(ano+'-'+mes+'-01')
-    let fim = new Date(ano+'-'+mes+'-'+lastday)
+    let inicio = new Date(ano + '-' + mes + '-01')
+    let fim = new Date(ano + '-' + mes + '-' + lastday)
 
     const reunioes = await Reuniao.findAll({
       where: {
