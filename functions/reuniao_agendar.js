@@ -8,7 +8,8 @@ const { Sala, Reuniao, Sequelize } = require(layerpath + 'models')
 module.exports.handler = async event => {
   try {
 
-    let {inicio, fim, sala_id} = event
+    let { user_id, inicio, fim, sala_id } = event
+
     let reuniao = ''
 
     inicio = new Date(inicio)
@@ -16,7 +17,7 @@ module.exports.handler = async event => {
 
     const ExisteSala = await Sala.findByPk(sala_id)
 
-    if(ExisteSala == null){
+    if (ExisteSala == null) {
       throw new Error('Sala não existe')
     }
 
@@ -34,11 +35,11 @@ module.exports.handler = async event => {
       }
     })
 
-    if(ConflitoSala.length > 0){
+    if (ConflitoSala.length > 0) {
       throw new Error('Já existe uma reunião neste horario')
     }
 
-    const reuniaoSave = await Reuniao.create({inicio, fim, SalaId: sala_id, UserId: 'a21a18bb-df19-46bb-b632-7b7f1529f6f9'})
+    const reuniaoSave = await Reuniao.create({ inicio, fim, SalaId: sala_id, UserId: user_id })
 
     reuniao = {
       reuniao_id: reuniaoSave.dataValues.id,

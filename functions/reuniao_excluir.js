@@ -8,12 +8,13 @@ const { Reuniao } = require(layerpath + 'models')
 module.exports.handler = async event => {
   try {
 
-    let {id} = event
+    let { user_id, id } = event
+
     let reuniao = ''
 
     const reuniaoSave = await Reuniao.findByPk(id)
 
-    if(reuniaoSave == null){
+    if (reuniaoSave == null) {
       throw new Error('Reunião não existe')
     }
 
