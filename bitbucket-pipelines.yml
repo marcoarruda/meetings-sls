@@ -1,0 +1,43 @@
+# This is a sample build configuration for JavaScript.
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: node:10.15.3
+
+pipelines:
+  pull-requests:
+    "**":
+      - step:
+          caches:
+            - node
+          script:
+            - npm install
+            - cd layer
+            - npm install
+            - cd ..
+            - npm test
+          services:
+            - mysql
+  custom:
+    test.code-coverage:
+      - step:
+          caches:
+            - node
+          script:
+            - npm install
+            - cd layer
+            - npm install
+            - cd ..
+            - npm run test-with-coverage
+          services:
+            - mysql
+definitions:
+  services:
+    mysql:
+      image: mysql:5.7
+      environment:
+        MYSQL_DATABASE: pipelines
+        MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+        MYSQL_USER: test_user
+        MYSQL_PASSWORD: test_user_password
