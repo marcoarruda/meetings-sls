@@ -8,7 +8,7 @@ const { Sala, Reuniao, Sequelize } = require(layerpath + 'models')
 module.exports.handler = async event => {
   try {
 
-    let { user_id, id, inicio, fim, sala_id } = event
+    let { user_id, id, inicio, fim, sala_id, nome } = event
 
     let reuniao = ''
 
@@ -51,10 +51,12 @@ module.exports.handler = async event => {
     reuniaoSave.inicio = inicio
     reuniaoSave.fim = fim
     reuniaoSave.SalaId = sala_id
+    reuniaoSave.nome = nome
 
     await reuniaoSave.save()
 
     reuniao = {
+      nome: reuniaoSave.nome,
       reuniao_id: reuniaoSave.id,
       sala_id: reuniaoSave.SalaId,
       user_id: reuniaoSave.UserId,

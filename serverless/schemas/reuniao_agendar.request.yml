@@ -4,6 +4,9 @@ schema:
       "type": "object",
       "required": ["inicio", "fim", "sala_id"],
       "properties": {
+        "nome": {
+          "type": "string"
+        },
         "inicio": {
           "type": "string"
         },

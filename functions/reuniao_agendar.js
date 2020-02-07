@@ -8,7 +8,7 @@ const { Sala, Reuniao, Sequelize } = require(layerpath + 'models')
 module.exports.handler = async event => {
   try {
 
-    let { user_id, inicio, fim, sala_id } = event
+    let { user_id, inicio, fim, sala_id, nome } = event
 
     let reuniao = ''
 
@@ -39,9 +39,10 @@ module.exports.handler = async event => {
       throw new Error('Já existe uma reunião neste horario')
     }
 
-    const reuniaoSave = await Reuniao.create({ inicio, fim, SalaId: sala_id, UserId: user_id })
+    const reuniaoSave = await Reuniao.create({ inicio, fim, SalaId: sala_id, UserId: user_id, nome })
 
     reuniao = {
+      nome: reuniaoSave.dataValues.nome,
       reuniao_id: reuniaoSave.dataValues.id,
       sala_id: reuniaoSave.dataValues.SalaId,
       user_id: reuniaoSave.dataValues.UserId,

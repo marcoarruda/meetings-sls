@@ -4,6 +4,7 @@ headers:
 template: >
   #set($inputRoot = $input.path('$'))
   {
+    "nome": $inputRoot.nome,
     "reuniao_id": $inputRoot.reuniao_id,
     "sala_id": $inputRoot.sala_id,
     "user_id": "$inputRoot.user_id",
