@@ -1,18 +1,6 @@
-schema:
-  application/json: >
-    {
-      "type": "object",
-      "required": ["id"],
-      "properties": {
-        "id": {
-          "type": "integer"
-        }
-      }
-    }
 template:
-  application/json: >
-    #set($inputRoot = $input.path('$'))
-    {
+  application/json:
+    '{
       "user_id": "$context.authorizer.claims.sub",
-      "id": $inputRoot.id
-    }
+      "id": "$input.params(''id'')"
+    }'

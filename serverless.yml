@@ -138,7 +138,7 @@ functions:
       - { Ref: ModelsLayerLambdaLayer }
     events:
       - http:
-          path: reuniao/excluir
+          path: reuniao/excluir/{id}
           method: delete
           integration: lambda
           cors: true
