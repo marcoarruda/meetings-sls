@@ -43,6 +43,14 @@ functions:
         - functions/migrate.js
     layers:
       - { Ref: ModelsLayerLambdaLayer }
+  cognito_listar:
+    handler: functions/cognito_listar.handler
+    package:
+      exclude: ${file(./serverless/fn-exclude.yml)}
+      include:
+        - functions/cognito_listar.js
+    layers:
+      - { Ref: ModelsLayerLambdaLayer }
   reuniao_agendar:
     handler: functions/reuniao_agendar.handler
     package:
