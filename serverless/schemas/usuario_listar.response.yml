@@ -1,0 +1,33 @@
+headers:
+  Access-Control-Allow-Origin: "'*'"
+  Content-Type: "'application/json'"
+template: >
+  #set($inputRoot = $input.path('$'))
+  {
+    "users":[
+      #foreach($item in $inputRoot)
+      {
+        "id": "$item.id",
+        "email": "$item.email",
+        "name": "$item.name",
+        "created": "$item.created",
+        "modified": "$item.modified",
+        "status": "$item.status",
+        "enabled": $item.enabled
+      }
+      #if($foreach.hasNext),#end
+      #end
+    ]
+  }
+statusCodes:
+  200:
+    pattern: ""
+  400:
+    pattern: '.*"statusCode":400.*'
+    template: >
+      #set($inputRoot = $input.path('$'))
+      {
+        "message": $inputRoot.errorMessage
+      }
+    headers:
+      Content-Type: "'application/json'"

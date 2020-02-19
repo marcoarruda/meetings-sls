@@ -1,5 +1,6 @@
 - .nyc_output/**
 - .vscode/**
+- bitbucket-pipelines.yml
 - commands/**
 - functions/**
 - layer/**
