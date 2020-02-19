@@ -7,6 +7,9 @@ schema:
         "id": {
           "type": "integer"
         },
+        "nome": {
+          "type": "string"
+        },
         "inicio": {
           "type": "string"
         },
@@ -24,6 +27,7 @@ template:
     {
       "user_id": "$context.authorizer.claims.sub",
       "id": $inputRoot.id,
+      "nome": "$inputRoot.nome",
       "inicio": "$inputRoot.inicio",
       "fim": "$inputRoot.fim",
       "sala_id": $inputRoot.sala_id

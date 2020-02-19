@@ -15,10 +15,9 @@ custom:
       securityGroupIds:
         - sg-72aa970a
       subnetIds:
-        - subnet-1714991b
-        - subnet-3872e260
-        - subnet-5120696c
+        - subnet-0dfe199852326992d
         - subnet-beaecddb
+        - subnet-1714991b
 
 provider:
   name: aws
@@ -33,6 +32,37 @@ provider:
     PASSWORD: ${self:custom.${self:provider.stage}.password}
     LAYERPTH: ${self:custom.${self:provider.stage}.layerpth}
   vpc: ${self:custom.vpc.${self:provider.stage}}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - cognito-idp:ForgotPassword
+        - cognito-idp:GlobalSignOut
+        - cognito-idp:ConfirmSignUp
+        - cognito-idp:CreateUserPool
+        - cognito-idp:ForgetDevice
+        - cognito-idp:GetUserAttributeVerificationCode
+        - cognito-idp:InitiateAuth
+        - cognito-idp:DeleteUser
+        - cognito-idp:SetUserMFAPreference
+        - cognito-idp:GetUser
+        - cognito-idp:ConfirmForgotPassword
+        - cognito-idp:SetUserSettings
+        - cognito-idp:SignUp
+        - cognito-idp:VerifyUserAttribute
+        - cognito-idp:ListDevices
+        - cognito-idp:ListUserPools
+        - cognito-idp:AssociateSoftwareToken
+        - cognito-idp:VerifySoftwareToken
+        - cognito-idp:GetDevice
+        - cognito-idp:RespondToAuthChallenge
+        - cognito-idp:DeleteUserAttributes
+        - cognito-idp:UpdateUserAttributes
+        - cognito-idp:DescribeUserPoolDomain
+        - cognito-idp:UpdateDeviceStatus
+        - cognito-idp:ChangePassword
+        - cognito-idp:ConfirmDevice
+        - cognito-idp:ResendConfirmationCode
+      Resource: "arn:aws:cognito-idp:us-east-1:376873334031:userpool/us-east-1_qToVlCku5"
 
 functions:
   migrate:
@@ -43,6 +73,23 @@ functions:
         - functions/migrate.js
     layers:
       - { Ref: ModelsLayerLambdaLayer }
+  usuario_listar:
+    handler: functions/usuario_listar.handler
+    package:
+      exclude: ${file(./serverless/fn-exclude.yml)}
+      include:
+        - functions/usuario_listar.js
+    layers:
+      - { Ref: ModelsLayerLambdaLayer }
+    events:
+      - http:
+          path: usuario/listar/{page}
+          method: get
+          integration: lambda
+          cors: true
+          request: ${file(./serverless/schemas/usuario_listar.request.yml)}
+          response: ${file(./serverless/schemas/usuario_listar.response.yml)}
+          authorizer: ${file(./serverless/fn-event-authorizer.yml)}
   reuniao_agendar:
     handler: functions/reuniao_agendar.handler
     package:

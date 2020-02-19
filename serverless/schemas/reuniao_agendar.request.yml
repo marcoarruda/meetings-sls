@@ -4,6 +4,9 @@ schema:
       "type": "object",
       "required": ["inicio", "fim", "sala_id"],
       "properties": {
+        "nome": {
+          "type": "string"
+        },
         "inicio": {
           "type": "string"
         },
@@ -21,6 +24,7 @@ template:
     {
       "user_id": "$context.authorizer.claims.sub",
       "inicio": "$inputRoot.inicio",
+      "nome": "$inputRoot.nome",
       "fim": "$inputRoot.fim",
       "sala_id": $inputRoot.sala_id
     }

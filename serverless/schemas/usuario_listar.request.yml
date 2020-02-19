@@ -1,0 +1,6 @@
+template:
+  application/json:
+    '{
+      "user_id": "$context.authorizer.claims.sub",
+      "page": $input.params(''page'')
+    }'

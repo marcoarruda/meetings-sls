@@ -8,6 +8,7 @@ template: >
       #foreach($item in $inputRoot)
       {
         "id": $item.id,
+        "nome": "$item.nome",
         "inicio": "$item.inicio",
         "fim": "$item.fim",
         "SalaId": $item.SalaId,

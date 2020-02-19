@@ -4,15 +4,16 @@ headers:
 template: >
   #set($inputRoot = $input.path('$'))
   {
-    "reunioes":[
+    "users":[
       #foreach($item in $inputRoot)
       {
-        "id": $item.id,
-        "nome": "$item.nome",
-        "inicio": "$item.inicio",
-        "fim": "$item.fim",
-        "SalaId": $item.SalaId,
-        "UserId": "$item.UserId"
+        "id": "$item.id",
+        "email": "$item.email",
+        "name": "$item.name",
+        "created": "$item.created",
+        "modified": "$item.modified",
+        "status": "$item.status",
+        "enabled": $item.enabled
       }
       #if($foreach.hasNext),#end
       #end
