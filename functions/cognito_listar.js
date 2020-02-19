@@ -14,7 +14,7 @@ function wrapper() {
   }
 
   return new Promise((resolve, reject) => {
-    userPool.listUsers(params, function (err, data) {
+    userPool.listUsers(params, (err, data) => {
       if (err) {
         reject(err)
       } else {
